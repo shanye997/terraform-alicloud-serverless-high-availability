@@ -1,7 +1,5 @@
 阿里云 Serverless 高可用架构 Terraform 模块
 
-================================================ 
-
 # terraform-alicloud-serverless-ha
 
 [English](https://github.com/alibabacloud-automation/terraform-alicloud-serverless-ha/blob/main/README.md) | 简体中文
@@ -75,16 +73,7 @@ module "serverless_ha" {
     vswitch_keys = ["web_01", "web_02"]
   }
 
-  alb_zone_mappings = [
-    {
-      zone_id     = data.alicloud_zones.default.zones[0].id
-      vswitch_key = "web_01"
-    },
-    {
-      zone_id     = data.alicloud_zones.default.zones[1].id
-      vswitch_key = "web_02"
-    }
-  ]
+  alb_zone_mappings = ["web_01", "web_02"]
 }
 ```
 
@@ -133,7 +122,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_alb_config"></a> [alb\_config](#input\_alb\_config) | Application Load Balancer configuration. | <pre>object({<br/>    load_balancer_name     = optional(string, "serverless-alb")<br/>    load_balancer_edition  = optional(string, "Basic")<br/>    address_type           = optional(string, "Internet")<br/>    address_allocated_mode = optional(string, "Fixed")<br/>    pay_type               = optional(string, "PayAsYouGo")<br/>  })</pre> | `{}` | no |
-| <a name="input_alb_zone_mappings"></a> [alb\_zone\_mappings](#input\_alb\_zone\_mappings) | ALB zone mappings configuration. Each mapping requires 'zone\_id' and 'vswitch\_key'. | <pre>list(object({<br/>    zone_id     = string<br/>    vswitch_key = string<br/>  }))</pre> | n/a | yes |
+| <a name="input_alb_zone_mappings"></a> [alb\_zone\_mappings](#input\_alb\_zone\_mappings) | ALB zone mappings configuration. List of vswitch keys for zone mappings. | `list(string)` | n/a | yes |
 | <a name="input_common_tags"></a> [common\_tags](#input\_common\_tags) | Common tags to be applied to all resources | `map(string)` | `{}` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment name (e.g., dev, staging, prod) | `string` | `"dev"` | no |
 | <a name="input_polardb_account_config"></a> [polardb\_account\_config](#input\_polardb\_account\_config) | PolarDB account configuration. The attributes 'account\_name' and 'account\_password' are required. | <pre>object({<br/>    account_name     = string<br/>    account_password = string<br/>    account_type     = optional(string, "Normal")<br/>  })</pre> | n/a | yes |
